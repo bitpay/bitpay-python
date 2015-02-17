@@ -1,4 +1,5 @@
 from ecdsa import SigningKey, SECP256k1, VerifyingKey
+from ecdsa import util as ecdsaUtil
 import binascii
 import hashlib
 
@@ -12,14 +13,25 @@ def get_sin_from_pem(pem):
   public_key = get_compressed_public_key_from_pem(pem)
   version = get_version_from_compressed_key(public_key)
   checksum = get_checksum_from_version(version)
-  print(version + checksum)
   return base58encode(version + checksum)
+
+def get_compressed_public_key_from_pem(pem):
+  vks = SigningKey.from_pem(pem).get_verifying_key().to_string()
+  bts = binascii.hexlify(vks)
+  compressed = compress_key(bts)
+  return compressed
+
+def sign(message, pem):
+  message = message.encode()
+  print(message)
+  sk = SigningKey.from_pem(pem)
+  signed = sk.sign(message, hashfunc=hashlib.sha256, sigencode=ecdsaUtil.sigencode_der)
+  return binascii.hexlify(signed).decode()
 
 def base58encode(hexastring):
   chars = '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz'
   int_val = int(hexastring, 16)
   encoded =  encode58("", int_val, chars)
-  print(encoded)
   return encoded
 
 def encode58(string, int_val, chars):
@@ -42,12 +54,6 @@ def get_version_from_compressed_key(key):
 
 def sha_digest(hexastring):
   return hashlib.sha256(binascii.unhexlify(hexastring)).hexdigest()
-
-def get_compressed_public_key_from_pem(pem):
-  vks = SigningKey.from_pem(pem).get_verifying_key().to_string()
-  bts = binascii.hexlify(vks)
-  compressed = compress_key(bts)
-  return compressed
 
 def compress_key(bts):
   intval = int(bts, 16)
