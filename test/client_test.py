@@ -11,7 +11,7 @@ class TestClient(unittest.TestCase):
     with self.assertRaisesRegex(BitPayArgumentError, "pairing code is not legal"):
       new_client.pair_pos_client("abcd")
 
-  def test_passes_errors(self):
+  def test_passes_errors_when_pairing(self):
     """web errors should be gracefully passed to the client"""
     new_client = Client()
     def a_request(url, request):
@@ -19,3 +19,14 @@ class TestClient(unittest.TestCase):
     with HTTMock(a_request):
       with self.assertRaisesRegex(BitPayBitPayError, "403: this is a 403 error"):
         new_client.pair_pos_client("a1B2c3d")
+
+  def test_passes_errors_when_creating_invoice(self):
+    """web errors should be gracefully passed to the client"""
+    new_client = Client()
+    def a_request(url, request):
+      return {'status_code': 403, 'content': b'{"error": "this is a 403 error"}'}
+    with HTTMock(a_request):
+      with self.assertRaisesRegex(BitPayBitPayError, "403: this is a 403 error"):
+        new_client.create_invoice({"price": 20, "currency": "USD"})
+
+

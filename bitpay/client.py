@@ -25,7 +25,7 @@ class Client:
     if response.ok:
       self.tokens = self.token_from_response(response.json())
       return self.tokens 
-    raise BitPayBitPayError('%(code)d: %(message)s' % {'code': response.status_code, 'message': response.json()['error']})
+    self.response_error(response)
 
   def create_invoice(self, params):
     self.verify_invoice_params(params['price'], params['currency'])
@@ -38,7 +38,9 @@ class Client:
       response = requests.post(uri, data=payload, headers=headers, verify=self.verify)
     except Exception as pro:
       raise BitPayConnectionError(pro.args)
-    return response.json()['data']
+    if response.ok:
+      return response.json()['data']
+    self.response_error(response)
 
   def verify_tokens(self):
     xidentity = key_utils.get_compressed_public_key_from_pem(self.pem)
@@ -67,3 +69,5 @@ class Client:
       float(price)
     except:
       raise BitPayArgumentError("Price must be formatted as a float")
+  def response_error(self, response):
+    raise BitPayBitPayError('%(code)d: %(message)s' % {'code': response.status_code, 'message': response.json()['error']})
