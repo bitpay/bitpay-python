@@ -23,7 +23,6 @@ def get_compressed_public_key_from_pem(pem):
 
 def sign(message, pem):
   message = message.encode()
-  print(message)
   sk = SigningKey.from_pem(pem)
   signed = sk.sign(message, hashfunc=hashlib.sha256, sigencode=ecdsaUtil.sigencode_der)
   return binascii.hexlify(signed).decode()
