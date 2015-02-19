@@ -34,7 +34,10 @@ class Client:
     xidentity = key_utils.get_compressed_public_key_from_pem(self.pem)
     xsignature = key_utils.sign(uri + payload, self.pem)
     headers = {"content-type": "application/json", 'accept': 'application/json', 'X-Identity': xidentity, 'X-Signature': xsignature, 'X-accept-version': '2.0.0'}
-    response = requests.post(uri, data=payload, headers=headers, verify=self.verify)
+    try:
+      response = requests.post(uri, data=payload, headers=headers, verify=self.verify)
+    except Exception as pro:
+      raise BitPayConnectionError(pro.args)
     return response.json()['data']
 
   def verify_tokens(self):

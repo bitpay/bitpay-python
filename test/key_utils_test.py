@@ -2,6 +2,7 @@ from bitpay import key_utils as utils
 import re
 import unittest
 from ecdsa import SigningKey, SECP256k1, VerifyingKey
+from ecdsa import util as ecdsaUtil
 import binascii
 import hashlib
 
@@ -21,7 +22,7 @@ class TestKeyUtils(unittest.TestCase):
     signed = utils.sign("message", pem)
     sk = SigningKey.from_pem(pem)
     vk = sk.get_verifying_key()
-    signed = signed.encode("utf-8")
+    print(signed)
     signed = binascii.unhexlify(signed)
-    vk.verify(signed, "message".encode('utf-8'), hashfunc=hashlib.sha256)
+    vk.verify(signed, "message".encode(), hashfunc=hashlib.sha256, sigdecode=ecdsaUtil.sigdecode_der)
 
