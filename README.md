@@ -7,7 +7,9 @@ Powerful, flexible, lightweight interface to the BitPay Bitcoin Payment Gateway 
 
 This library is only compatible with Python 3. If you're using Python 2.x, please use our separate [bitpay-python](https://github.com/bitpay/bitpay-python-py2) library.
 
-## [Getting Started &raquo;](http://dev.bitpay.com/guides/python.html)
+## Getting Started
+
+To get up and running with this library quickly, see the GUIDE here: (https://github.com/bitpay/bitpay-python/blob/master/GUIDE.md)
 
 ## API Documentation
 
