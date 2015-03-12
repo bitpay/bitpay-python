@@ -11,6 +11,12 @@ class TestClient(unittest.TestCase):
     with self.assertRaisesRegex(BitPayArgumentError, "pairing code is not legal"):
       new_client.pair_pos_client("abcd")
 
+  def test_client_pairing(self):
+    """tests whether the requested facade actually returns a pairing code and token"""
+    new_client = Client()
+    with self.assertRaisesRegexp(BitPayBitPayError, "500: Facade not allowed"):
+      new_client.create_token("merchant")
+
   def test_passes_errors_when_pairing(self):
     """web errors should be gracefully passed to the client"""
     new_client = Client()
