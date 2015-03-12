@@ -13,6 +13,17 @@ class Client:
     self.tokens = tokens
     self.user_agent = 'bitpay-python'
 
+  def create_token(self, facade):
+    payload = {'id': self.client_id, 'facade': facade}
+    headers = {"content-type": "application/json", "accept": "application/json", "X-accept-version": "2.0.0"}
+    try:
+      response = requests.post(self.uri + "/tokens", verify=self.verify, data=json.dumps(payload), headers=headers)
+    except Exception as pro:
+      raise BitPayConnectionError('Connection refused')
+    if response.ok:
+      return response.json()
+    self.response_error(response)
+
   def pair_pos_client(self, code):
     if re.match("^\w{7,7}$", code) is None:
       raise BitPayArgumentError("pairing code is not legal")
