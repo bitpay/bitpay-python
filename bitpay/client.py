@@ -17,14 +17,18 @@ class Client:
     if re.match("^\w{7,7}$", code) is None:
       raise BitPayArgumentError("pairing code is not legal")
     payload = {'id': self.client_id, 'pairingCode': code}
-    headers = {"content-type": "application/json", "accept": "application/json", "X-accept-version": "2.0.0"}
-    try:
-      response = requests.post(self.uri + "/tokens", verify=self.verify, data=json.dumps(payload), headers=headers)
-    except Exception as pro:
-      raise BitPayConnectionError('Connection refused')
+    response = self.unsigned_get_request(payload)
     if response.ok:
       self.tokens = self.token_from_response(response.json())
       return self.tokens 
+    self.response_error(response)
+
+  def create_token(self, facade):
+    payload = {'id': self.client_id, 'facade': facade}
+    response = self.unsigned_get_request(payload)
+    if response.ok:
+      self.tokens = self.token_from_response(response.json())
+      return response.json()['data'][0]['pairingCode']
     self.response_error(response)
 
   def create_invoice(self, params):
@@ -71,3 +75,11 @@ class Client:
       raise BitPayArgumentError("Price must be formatted as a float")
   def response_error(self, response):
     raise BitPayBitPayError('%(code)d: %(message)s' % {'code': response.status_code, 'message': response.json()['error']})
+
+  def unsigned_get_request(self, payload):
+    headers = {"content-type": "application/json", "accept": "application/json", "X-accept-version": "2.0.0"}
+    try:
+      response = requests.post(self.uri + "/tokens", verify=self.verify, data=json.dumps(payload), headers=headers)
+    except Exception as pro:
+      raise BitPayConnectionError('Connection refused')
+    return response

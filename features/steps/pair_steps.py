@@ -3,6 +3,7 @@ import time
 import os
 import six
 import json
+import re
 from bitpay.client import Client
 from bitpay import key_utils
 
@@ -22,13 +23,16 @@ def step_impl(context):
   client.pair_pos_client(claim_code)
   assert client.tokens['pos']
 
+@given(u'the user waits {wait:d} seconds')
+def step_impl(context, wait):
+  time.sleep(wait)
+
 @then(u'the user is paired with BitPay')
 def step_impl(context):
   assert client.verify_tokens()
 
 @given(u'the user fails to pair with a semantically {valid} code {code}')
 def step_impl(context, code, valid):
-  time.sleep(0.5)
   try: 
     client.pair_pos_client(code)
   except Exception as error:
@@ -37,7 +41,6 @@ def step_impl(context, code, valid):
 
 @when(u'the user fails to pair with BitPay because of an incorrect port')
 def step_impl(context):
-  time.sleep(0.5)
   badAddress = ROOT_ADDRESS.split(":")
   badAddress = badAddress[0] + ":" + badAddress[1] + ":999"
   newclient = Client(api_uri=badAddress, insecure=True)
@@ -48,9 +51,20 @@ def step_impl(context):
     global exception
     exception = error
 
+@given(u'the user requests a client-side pairing')
+def step_impl(context):
+  global pairing_code
+  client = Client(api_uri=ROOT_ADDRESS, insecure=True, pem=PEM)
+  pairing_code = client.create_token("merchant")
+
+
+@then(u'they will receive a claim code')
+def step_impl(context):
+  assert re.match("^\w{7,7}$", pairing_code) != None
+
 @then(u'they will receive a {error} matching {message}')
 def step_impl(context, error, message):
-  assert exception.__class__.__name__ == error and exception.args[0] == message
+  assert exception.__class__.__name__ == error and exception.args[0] == message, "expected %s to match %s" % (exception.args[0], message)
 
 @given(u'the user is authenticated with BitPay')
 def step_impl(context):
