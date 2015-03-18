@@ -20,7 +20,12 @@ def step_impl(context):
   claim_code = get_claim_code_from_server()
   global client
   client = Client(api_uri=ROOT_ADDRESS, insecure=True, pem=PEM)
-  client.pair_pos_client(claim_code)
+  try: 
+    client.pair_pos_client(claim_code)
+  except Exception as error:
+    if error.args[0] == "500: Unable to create token because of too many requests.":
+      time.sleep(60)
+      client.pair_pos_client(claim_code)
   assert client.tokens['pos']
 
 @given(u'the user waits {wait:d} seconds')
@@ -38,6 +43,13 @@ def step_impl(context, code, valid):
   except Exception as error:
     global exception
     exception = error
+  if exception.args[0] == "500: Unable to create token because of too many requests.":
+    time.sleep(60)
+    try: 
+      client.pair_pos_client(code)
+    except Exception as error:
+      global exception
+      exception = error
 
 @when(u'the user fails to pair with BitPay because of an incorrect port')
 def step_impl(context):

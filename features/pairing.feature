@@ -4,16 +4,17 @@ Feature: pairing with bitpay
   Is able to pair successfully
 
   Scenario: the client has a correct pairing code
-    Given the user waits 10 seconds
+    Given the user waits 1 seconds
     And the user pairs with BitPay with a valid pairing code
     Then the user is paired with BitPay
 
   Scenario: the client initiates pairing
-    Given the user waits 10 seconds
+    Given the user waits 1 seconds
     And the user requests a client-side pairing
     Then they will receive a claim code
 
   Scenario Outline: the client has a bad pairing code
+    Given the user waits 1 seconds
     Given the user fails to pair with a semantically <valid> code <code>
     Then they will receive a <error> matching <message>
   Examples:
