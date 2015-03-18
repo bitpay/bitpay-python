@@ -42,6 +42,16 @@ class Client:
       return response.json()['data']
     self.response_error(response)
 
+  def get_invoice(self, invoice_id): 
+    uri = self.uri + "/invoices/" + invoice_id
+    try:
+      response = requests.get(uri, verify=self.verify)
+    except Exception as pro:
+      raise BitPayConnectionError(pro.args)
+    if response.ok:
+      return response.json()['data']
+    self.response_error(response)
+
   def verify_tokens(self):
     xidentity = key_utils.get_compressed_public_key_from_pem(self.pem)
     url = self.uri + "/tokens"

@@ -91,6 +91,22 @@ def create_invoice(amount, currency):
     print(error.args[0])
     exception = error
 
+@given(u'that a user knows an invoice id')
+def step_impl(context):
+  global client
+  global invoice
+  client = client_from_stored_values()
+  invoice = client.create_invoice({"price": 10, "currency": "USD", "token": client.tokens['pos'] })
+
+@then(u'they can retrieve that invoice')
+def step_impl(context):
+  global client
+  global invoice
+  amount = invoice['price']
+  invoice_id = invoice['id']
+  retrieved_invoice = client.get_invoice(invoice_id)
+  assert amount == retrieved_invoice['price']
+
 def client_from_stored_values():
   for f in ["local.pem", "tokens.json"]:
     try:
