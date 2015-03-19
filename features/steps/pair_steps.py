@@ -140,10 +140,9 @@ def get_claim_code_from_server():
   browser.visit(ROOT_ADDRESS + "/merchant-login")
   browser.fill_form({"email": USER_NAME, "password": PASSWORD})
   browser.find_by_id("loginButton")[0].click()
-  time.sleep(1)
+  time.sleep(5)
   browser.visit(ROOT_ADDRESS + "/api-tokens")
   browser.find_by_css(".token-access-new-button").find_by_css(".btn").find_by_css(".icon-plus")[0].click()
   browser.find_by_id("token-new-form").find_by_css(".btn")[0].click()
   return browser.find_by_css(".token-claimcode")[0].html
   
-
