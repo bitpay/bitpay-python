@@ -164,10 +164,11 @@ def client_from_stored_values():
 def get_claim_code_from_server():
   browser = Browser('phantomjs', service_args=['--ignore-ssl-errors=true'])
   browser.visit(ROOT_ADDRESS + "/merchant-login")
+  time.sleep(3)
   browser.fill_form({"email": USER_NAME, "password": PASSWORD})
   browser.find_by_id("loginButton")[0].click()
-  time.sleep(1)
   browser.visit(ROOT_ADDRESS + "/api-tokens")
+  time.sleep(3)
   browser.find_by_css(".token-access-new-button").find_by_css(".btn").find_by_css(".icon-plus")[0].click()
   browser.find_by_id("token-new-form").find_by_css(".btn")[0].click()
   return browser.find_by_css(".token-claimcode")[0].html
