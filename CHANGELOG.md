@@ -8,3 +8,4 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 - Long sleeps in pairing test to compensate for rate limiters
+- Smart sleep in test to retry if rate limiter limits

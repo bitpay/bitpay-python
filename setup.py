@@ -8,7 +8,7 @@ setup(
     author = "Paul Daigle",
     author_email = "integrations@bitpay.com",
     url = "https://github.com/bitpay/bitpay-python",
-    download_url = "https://github.com/bitpay/bitpay-python/tarball/v2.2.0",
+    download_url = "https://github.com/bitpay/bitpay-python/tarball/v2.3.0",
     keywords = ["bitcoin", "payments", "crypto"],
     classifiers = [
 "Programming Language :: Python",
