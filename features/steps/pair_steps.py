@@ -3,6 +3,7 @@ import time
 import os
 import six
 import json
+import re
 from bitpay.client import Client
 from bitpay import key_utils
 
@@ -19,8 +20,17 @@ def step_impl(context):
   claim_code = get_claim_code_from_server()
   global client
   client = Client(api_uri=ROOT_ADDRESS, insecure=True, pem=PEM)
-  client.pair_pos_client(claim_code)
+  try: 
+    client.pair_pos_client(claim_code)
+  except Exception as error:
+    if error.args[0] == "500: Unable to create token because of too many requests.":
+      time.sleep(60)
+      client.pair_pos_client(claim_code)
   assert client.tokens['pos']
+
+@given(u'the user waits {wait:d} seconds')
+def step_impl(context, wait):
+  time.sleep(wait)
 
 @then(u'the user is paired with BitPay')
 def step_impl(context):
@@ -28,16 +38,21 @@ def step_impl(context):
 
 @given(u'the user fails to pair with a semantically {valid} code {code}')
 def step_impl(context, code, valid):
-  time.sleep(0.5)
   try: 
     client.pair_pos_client(code)
   except Exception as error:
     global exception
     exception = error
+  if exception.args[0] == "500: Unable to create token because of too many requests.":
+    time.sleep(60)
+    try: 
+      client.pair_pos_client(code)
+    except Exception as error:
+      global exception
+      exception = error
 
 @when(u'the user fails to pair with BitPay because of an incorrect port')
 def step_impl(context):
-  time.sleep(0.5)
   badAddress = ROOT_ADDRESS.split(":")
   badAddress = badAddress[0] + ":" + badAddress[1] + ":999"
   newclient = Client(api_uri=badAddress, insecure=True)
@@ -48,9 +63,20 @@ def step_impl(context):
     global exception
     exception = error
 
+@given(u'the user requests a client-side pairing')
+def step_impl(context):
+  global pairing_code
+  client = Client(api_uri=ROOT_ADDRESS, insecure=True, pem=PEM)
+  pairing_code = client.create_token("merchant")
+
+
+@then(u'they will receive a claim code')
+def step_impl(context):
+  assert re.match("^\w{7,7}$", pairing_code) != None
+
 @then(u'they will receive a {error} matching {message}')
 def step_impl(context, error, message):
-  assert exception.__class__.__name__ == error and exception.args[0] == message
+  assert exception.__class__.__name__ == error and exception.args[0] == message, "expected %s to match %s" % (exception.args[0], message)
 
 @given(u'the user is authenticated with BitPay')
 def step_impl(context):
@@ -90,6 +116,22 @@ def create_invoice(amount, currency):
     print(error.__class__.__name__)
     print(error.args[0])
     exception = error
+
+@given(u'that a user knows an invoice id')
+def step_impl(context):
+  global client
+  global invoice
+  client = client_from_stored_values()
+  invoice = client.create_invoice({"price": 10, "currency": "USD", "token": client.tokens['pos'] })
+
+@then(u'they can retrieve that invoice')
+def step_impl(context):
+  global client
+  global invoice
+  amount = invoice['price']
+  invoice_id = invoice['id']
+  retrieved_invoice = client.get_invoice(invoice_id)
+  assert amount == retrieved_invoice['price']
 
 def client_from_stored_values():
   for f in ["local.pem", "tokens.json"]:
