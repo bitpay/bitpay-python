@@ -10,7 +10,7 @@ setup(
     url = "https://github.com/bitpay/bitpay-python",
     download_url = "https://github.com/bitpay/bitpay-python/tarball/v2.3.0",
     keywords = ["bitcoin", "payments", "crypto"],
-    install_requires = ["ecdsa"],
+    install_requires = ["requests", "ecdsa"],
     classifiers = [
 "Programming Language :: Python",
 "Programming Language :: Python :: 3",
