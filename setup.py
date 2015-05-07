@@ -3,7 +3,7 @@ from distutils.core import setup
 setup(
     name = "bitpay",
     packages = ["bitpay"],
-    version = "2.3.1",
+    version = "2.3.2",
     description = "Accept bitcoin with BitPay",
     author = "Paul Daigle",
     author_email = "integrations@bitpay.com",
