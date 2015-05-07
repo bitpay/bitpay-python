@@ -1,9 +1,9 @@
 # BitPay Library for Python 
 Powerful, flexible, lightweight interface to the BitPay Bitcoin Payment Gateway API.
 
-[![Supported Python versions](https://pypip.in/py_versions/bitpay/badge.svg)](https://pypi.python.org/pypi/bitpay/)
-[![PyPi Package](https://pypip.in/version/bitpay/badge.svg)](https://pypi.python.org/pypi/bitpay/2.2.0)
-[![](https://travis-ci.org/bitpay/bitpay-python.svg?branch=master)](https://travis-ci.org/bitpay/bitpay-python)
+[![MIT Licence](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](http://opensource.org/licenses/MIT)
+[![PyPi Package](https://img.shields.io/pypi/v/bitpay.svg?style=flat-square)](https://pypi.python.org/pypi/bitpay/2.3.2)
+[![](https://img.shields.io/travis/bitpay/bitpay-python.svg?style=flat-square)](https://travis-ci.org/bitpay/bitpay-python)
 
 This library is only compatible with Python 3. Please use the bitpay-python-py2 library for Python 2 installations.
 
