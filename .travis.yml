@@ -6,3 +6,5 @@ install:
 script: 
   - nosetests
   - behave
+after_success:
+  - coveralls
