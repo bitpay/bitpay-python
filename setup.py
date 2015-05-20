@@ -12,8 +12,8 @@ setup(
     keywords = ["bitcoin", "payments", "crypto"],
     install_requires = ["requests", "ecdsa"],
     classifiers = [
-"Programming Language :: Python",
-"Programming Language :: Python :: 3",
+"Programming Language :: Python :: 3.4",
+"Programming Language :: Python :: 3 :: Only",
 "Development Status :: 5 - Production/Stable",
 "Environment :: Web Environment",
 "Intended Audience :: Developers",

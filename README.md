@@ -1,9 +1,12 @@
-# BitPay Library for Python 
+# BitPay Library for Python
 Powerful, flexible, lightweight interface to the BitPay Bitcoin Payment Gateway API.
 
-[![MIT Licence](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](http://opensource.org/licenses/MIT)
-[![PyPi Package](https://img.shields.io/pypi/v/bitpay.svg?style=flat-square)](https://pypi.python.org/pypi/bitpay/2.3.2)
-[![](https://img.shields.io/travis/bitpay/bitpay-python.svg?style=flat-square)](https://travis-ci.org/bitpay/bitpay-python)
+[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](https://raw.githubusercontent.com/bitpay/bitpay-python/master/LICENSE.txt)
+[![Travis](https://img.shields.io/travis/bitpay/bitpay-python.svg?style=flat-square)](https://travis-ci.org/bitpay/bitpay-python)
+[![PyPI](https://img.shields.io/pypi/v/bitpay.svg?style=flat-square)](https://pypi.python.org/pypi?%3Aaction=pkg_edit&name=bitpay)
+[![Code Climate](https://img.shields.io/codeclimate/github/bitpay/bitpay-python.svg?style=flat-square)](https://codeclimate.com/github/bitpay/bitpay-python)
+[![Scrutinizer](https://img.shields.io/scrutinizer/g/bitpay/bitpay-python.svg?style=flat-square)](https://scrutinizer-ci.com/g/bitpay/bitpay-python/)
+[![Coveralls](https://img.shields.io/coveralls/bitpay/bitpay-python.svg?style=flat-square)](https://coveralls.io/r/bitpay/bitpay-python)
 
 This library is only compatible with Python 3. Please use the bitpay-python-py2 library for Python 2 installations.
 
@@ -15,7 +18,7 @@ API Documentation is available on the [BitPay site](https://bitpay.com/api).
 
 ## Running the Tests
 
-Before running the behavior tests, you will need a test.bitpay.com account and you will need to set the local constants. 
+Before running the behavior tests, you will need a test.bitpay.com account and you will need to set the local constants.
 
 To set constants:
     > source tasks/set_constants.sh "https://test.bitpay.com" your@email yourpassword
@@ -25,7 +28,7 @@ To run unit tests:
 
 To run behavior tests:
     > behave
-    
+
 ## Found a bug?
 Let us know! Send a pull request or a patch. Questions? Ask! We're here to help. We will respond to all filed issues.
 
