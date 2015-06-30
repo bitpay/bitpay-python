@@ -29,4 +29,10 @@ class TestClient(unittest.TestCase):
       with self.assertRaisesRegex(BitPayBitPayError, "403: this is a 403 error"):
         new_client.create_invoice({"price": 20, "currency": "USD"})
 
-
+  def test_unsigned_request_rates(self):
+    """tests whether the generic wrapper returns properly
+       when asked for rates
+    """
+    new_client = Client()
+    request = new_client.unsigned_request('/rates/EUR')
+    self.assertIn('rate', request.json()['data'])

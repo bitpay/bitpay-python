@@ -17,7 +17,7 @@ class Client:
     if re.match("^\w{7,7}$", code) is None:
       raise BitPayArgumentError("pairing code is not legal")
     payload = {'id': self.client_id, 'pairingCode': code}
-    response = self.unsigned_get_request(payload)
+    response = self.unsigned_request('/tokens', payload)
     if response.ok:
       self.tokens = self.token_from_response(response.json())
       return self.tokens 
@@ -25,7 +25,7 @@ class Client:
 
   def create_token(self, facade):
     payload = {'id': self.client_id, 'facade': facade}
-    response = self.unsigned_get_request(payload)
+    response = self.unsigned_request('/tokens', payload)
     if response.ok:
       self.tokens = self.token_from_response(response.json())
       return response.json()['data'][0]['pairingCode']
@@ -86,10 +86,23 @@ class Client:
   def response_error(self, response):
     raise BitPayBitPayError('%(code)d: %(message)s' % {'code': response.status_code, 'message': response.json()['error']})
 
-  def unsigned_get_request(self, payload):
+  def unsigned_request(self, path, payload=None):
+    """
+    generic bitpay usigned wrapper
+    passing a payload will do a POST, otherwise a GET
+    """
     headers = {"content-type": "application/json", "accept": "application/json", "X-accept-version": "2.0.0"}
     try:
-      response = requests.post(self.uri + "/tokens", verify=self.verify, data=json.dumps(payload), headers=headers)
+      if payload:
+        response = requests.post(self.uri + path, verify=self.verify, data=json.dumps(payload), headers=headers)
+      else:
+        response = requests.get(self.uri + path, verify=self.verify, headers=headers)
     except Exception as pro:
       raise BitPayConnectionError('Connection refused')
     return response
+
+  def unsigned_get_request(self, path, payload=None):
+    """
+    Deprecated
+    """
+    return self.unsigned_request('/tokens', payload)
