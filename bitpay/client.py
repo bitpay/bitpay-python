@@ -57,6 +57,9 @@ class Client:
     self.response_error(response)
 
   def verify_tokens(self):
+    """
+    Deprecated, will be made private in 2.4
+    """
     xidentity = key_utils.get_compressed_public_key_from_pem(self.pem)
     url = self.uri + "/tokens"
     xsignature = key_utils.sign(self.uri + "/tokens", self.pem)
@@ -71,12 +74,18 @@ class Client:
       return True
 
   def token_from_response(self, responseJson):
+    """
+    Deprecated, will be made private in 2.4
+    """
     token = responseJson['data'][0]['token']
     facade = responseJson['data'][0]['facade']
     return {facade: token}
     raise BitPayBitPayError('%(code)d: %(message)s' % {'code': response.status_code, 'message': response.json()['error']})
 
   def verify_invoice_params(self, price, currency):
+    """
+    Deprecated, will be made private in 2.4
+    """
     if re.match("^[A-Z]{3,3}$", currency) is None:
       raise BitPayArgumentError("Currency is invalid.")
     try: 
@@ -103,6 +112,6 @@ class Client:
 
   def unsigned_get_request(self, path, payload=None):
     """
-    Deprecated
+    Deprecated, will be removed in 2.4
     """
     return self.unsigned_request('/tokens', payload)
