@@ -34,11 +34,9 @@ Let us know! Send a pull request or a patch. Questions? Ask! We're here to help.
 
 **BitPay Support:**
 
-* [BitPay Labs](https://labs.bitpay.com/c/libraries/python)
-  * Post a question in our discussion forums
 * [GitHub Issues](https://github.com/bitpay/bitpay-python/issues)
   * Open an issue if you are having issues with this library
-* [Support](https://support.bitpay.com)
+* [Support](https://help.bitpay.com)
   * BitPay merchant support documentation
 
 Sometimes a download can become corrupted for various reasons.  However, you can verify that the release package you downloaded is correct by checking the md5 checksum "fingerprint" of your download against the md5 checksum value shown on the Releases page.  Even the smallest change in the downloaded release package will cause a different value to be shown!
