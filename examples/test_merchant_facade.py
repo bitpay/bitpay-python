@@ -1,6 +1,6 @@
-from bitpay.bitpay_exceptions import *
-import bitpay.bitpay_key_utils as bku
-from bitpay.bitpay_client import *
+from bitpay.exceptions import *
+import bitpay.key_utils as bku
+from bitpay.client import *
 import pprint
 import requests
 import json
@@ -87,7 +87,7 @@ fetch_token("merchant")
 
 #Now we assume that the pairing code that we generated along with the crypto keys is paired with your merchant account
 #
-print "We will create an invoice using the merchant facade"
+print("We will create an invoice using the merchant facade")
 
 invoice = client.create_invoice({"price": 50.00, "currency": "USD", "token": client.tokens['merchant']})
 
