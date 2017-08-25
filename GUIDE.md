@@ -1,15 +1,18 @@
 # Using the BitPay Python Client Library
 
+For detailed instructions, see https://support.bitpay.com/hc/en-us/articles/115003001203-How-do-I-configure-and-use-the-BitPay-Python-Library-
+
 
 ## Prerequisites
 You must have BitPay or test.bitpay merchant account to use this library. [Signing up for a merchant account](https://bitpay.com/start) is free.
+More information about setting up a test.bitpay merchant account and a testnet bitcoin wallet can be found here: https://bitpay.com/docs/testing
 
 ## Quick Start
 ### Installation
 
 BitPay's python library was developed in Python 3.4.2. The recommended method of installion is using pip.
 
-`pip install 'bitpay'`
+`pip3 install 'bitpay'`
 
 ### Basic Usage
 
