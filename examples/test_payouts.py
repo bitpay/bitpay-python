@@ -4,7 +4,6 @@ from bitpay.client import *
 import pprint
 import requests
 import json
-import re
 import os.path
 
 #API_HOST = "https://bitpay.com" #for production, live bitcoin
@@ -38,7 +37,7 @@ def fetch_token(facade):
         pairingCode = client.create_token(facade)
         print("Creating " + facade + " token.")
         print("Please go to:  %s/dashboard/merchant/api-tokens  then enter \"%s\" then click the \"Find\" button, then click \"Approve\"" % (API_HOST, pairingCode))
-        raw_input("When you've complete the above, hit enter to continue...")
+        input("When you've complete the above, hit enter to continue...")
         print("token is: %s" % client.tokens[facade])
         f = open(TOKEN_FILE + facade, 'w')
         f.write(client.tokens[facade])
@@ -89,7 +88,7 @@ token = client.tokens['payroll']
 print("Creating a payout batch now")
 print("token = " + token)
 # posting a payout batch
-params = {"token":token, "notificationURL":"http://test.merchant.com/IPNlogger.php", "notificationEmail":"test@merchant.com", "effectiveDate":"2017-08-23", "amount":"400","currency":"USD","instructions":[ {"label":"Test1","address":"mzDTjhkfJfatXHRUWKcE2BXxHt4Pfz2PK7","amount":"300"},{"label":"Test2","address":"mfadguj41aYgEwPATAFnkKcKQNqhpNTrdi","amount":"100"}]}
+params = {"token":token, "notificationURL":"https://hookb.in/3OBkOPk23ouKeKj2M2WQ", "notificationEmail":"agallardo@bitpay.com", "effectiveDate":"2019-05-21", "amount":"10","currency":"USD","instructions":[ {"label":"Test1","address":"mx2Wv5j8SrPnxAQtNB3uf8mii1Vc5UDKsZ","amount":"7"},{"label":"Test2","address":"mx2Wv5j8SrPnxAQtNB3uf8mii1Vc5UDKsZ","amount":"3"}]}
 payoutBatch = post_to_bitpay_api(client, "https://test.bitpay.com", "payouts", params)
 pp.pprint(payoutBatch)
 

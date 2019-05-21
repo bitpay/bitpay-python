@@ -4,13 +4,12 @@ from bitpay.client import *
 import pprint
 import requests
 import json
-import re
 import os.path
 
 #API_HOST = "https://bitpay.com" #for production, live bitcoin
 API_HOST = "https://test.bitpay.com" #for testing, testnet bitcoin
-KEY_FILE = "/tmp/key.priv"
-TOKEN_FILE = "/tmp/token.priv"
+KEY_FILE = "tmp/key.priv"
+TOKEN_FILE = "tmp/token.priv"
 
 # check if there is a preexisting key file
 if os.path.isfile(KEY_FILE):
@@ -39,7 +38,7 @@ def fetch_token(facade):
         pairingCode = client.create_token(facade)
         print("Creating " + facade + " token.")
         print("Please go to:  %s/dashboard/merchant/api-tokens  then enter \"%s\" then click the \"Find\" button, then click \"Approve\"" % (API_HOST, pairingCode))
-        raw_input("When you've complete the above, hit enter to continue...")
+        input("When you've complete the above, hit enter to continue...")
         print("token is: %s" % client.tokens[facade])
         f = open(TOKEN_FILE + facade, 'w')
         f.write(client.tokens[facade])
@@ -99,7 +98,7 @@ print("hopefully the above looks OK?")
 print("continuing if we can...")
 
 
-invoiceId = "REPLACE_BY_VALID_INVOICEID"
+invoiceId = invoice['id']
 print("**")
 print("Now fetching an invoice with invoiceId " + invoiceId)
 print("**")

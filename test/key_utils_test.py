@@ -1,7 +1,7 @@
 from bitpay import key_utils as utils
 import re
 import unittest
-from ecdsa import SigningKey, SECP256k1, VerifyingKey
+from ecdsa import SigningKey
 from ecdsa import util as ecdsaUtil
 import binascii
 import hashlib
