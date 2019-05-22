@@ -48,8 +48,9 @@ class Client:
 
   def get_invoice(self, invoice_id): 
     uri = self.uri + "/invoices/" + invoice_id
+    headers = {'accept': 'application/json'}
     try:
-      response = requests.get(uri, verify=self.verify)
+      response = requests.get(uri, headers=headers, verify=self.verify)
     except Exception as pro:
       raise BitPayConnectionError(pro.args)
     if response.ok:
