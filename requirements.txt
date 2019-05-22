@@ -1,4 +1,3 @@
-behave==1.2.6
 certifi==2019.3.9
 chardet==3.0.4
 coverage==4.5.3
@@ -9,11 +8,9 @@ httmock==1.3.0
 idna==2.8
 nose==1.3.7
 parse==1.12.0
-parse-type==0.4.2
 pymongo==3.8.0
-requests==2.22.0
+requests==2.21.0
 selenium==3.141.0
-six==1.12.0
 splinter==0.10.0
 urllib3==1.25.2
 virtualenv==16.6.0

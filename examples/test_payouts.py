@@ -88,7 +88,7 @@ token = client.tokens['payroll']
 print("Creating a payout batch now")
 print("token = " + token)
 # posting a payout batch
-params = {"token":token, "notificationURL":"https://hookb.in/3OBkOPk23ouKeKj2M2WQ", "notificationEmail":"agallardo@bitpay.com", "effectiveDate":"2019-05-21", "amount":"10","currency":"USD","instructions":[ {"label":"Test1","address":"mx2Wv5j8SrPnxAQtNB3uf8mii1Vc5UDKsZ","amount":"7"},{"label":"Test2","address":"mx2Wv5j8SrPnxAQtNB3uf8mii1Vc5UDKsZ","amount":"3"}]}
+params = {"token":token, "notificationURL":"https://hookb.in/3OBkOPk23ouKeKj2M2WQ", "effectiveDate":"2019-05-21", "amount":"10","currency":"USD","instructions":[ {"label":"Test1","address":"mx2Wv5j8SrPnxAQtNB3uf8mii1Vc5UDKsZ","amount":"7"},{"label":"Test2","address":"mx2Wv5j8SrPnxAQtNB3uf8mii1Vc5UDKsZ","amount":"3"}]}
 payoutBatch = post_to_bitpay_api(client, "https://test.bitpay.com", "payouts", params)
 pp.pprint(payoutBatch)
 
