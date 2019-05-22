@@ -1,13 +1,12 @@
 from bitpay.exceptions import *
 from bitpay.client import Client
-from httmock import urlmatch, HTTMock
-import requests
+from httmock import HTTMock
 import unittest
 
 class TestClient(unittest.TestCase):
   def test_pair_code_check(self):
     """tests whether the pairing code is syntatically correct"""
-    new_client = Client()
+    new_client = Client(api_uri="https://test.bitpay.com")
     with self.assertRaisesRegex(BitPayArgumentError, "pairing code is not legal"):
       new_client.pair_pos_client("abcd")
 
