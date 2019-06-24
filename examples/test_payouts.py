@@ -5,11 +5,12 @@ import pprint
 import requests
 import json
 import os.path
+import sys
 
 #API_HOST = "https://bitpay.com" #for production, live bitcoin
 API_HOST = "https://test.bitpay.com" #for testing, testnet bitcoin
-KEY_FILE = "/tmp/key.priv"
-TOKEN_FILE = "/tmp/token.priv"
+KEY_FILE = "tmp/key.priv"
+TOKEN_FILE = "tmp/token.priv"
 pp = pprint.PrettyPrinter(indent=4)
 
 # check if there is a preexisting key file
@@ -37,11 +38,14 @@ def fetch_token(facade):
         pairingCode = client.create_token(facade)
         print("Creating " + facade + " token.")
         print("Please go to:  %s/dashboard/merchant/api-tokens  then enter \"%s\" then click the \"Find\" button, then click \"Approve\"" % (API_HOST, pairingCode))
-        input("When you've complete the above, hit enter to continue...")
+        if int(sys.version[0]) == 3:
+            input("When you've complete the above, hit enter to continue...")
+        else:
+            raw_input("When you've complete the above, hit enter to continue...")
         print("token is: %s" % client.tokens[facade])
         f = open(TOKEN_FILE + facade, 'w')
         f.write(client.tokens[facade])
-        f.close() 
+        f.close()
 
 def get_from_bitpay_api(client, uri, token):
     payload = "?token=%s" % token
