@@ -2,10 +2,9 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## [2.3.0] - 2015-03-13
+## [2.5.1906] - 2019-06-24
 ### Added
-- Feature: client initiated pairing
+- Feature: Python 2.7 support
 
 ### Changed
-- Long sleeps in pairing test to compensate for rate limiters
-- Smart sleep in test to retry if rate limiter limits
+- Tests adjusted for v2.7

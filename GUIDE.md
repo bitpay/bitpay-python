@@ -10,7 +10,7 @@ More information about setting up a test.bitpay merchant account and a testnet b
 ## Quick Start
 ### Installation
 
-BitPay's python library was developed in Python 3.4.2. The recommended method of installion is using pip.
+BitPay's python library was developed in Python 3.7. The recommended method of installion is using pip.
 
 `pip3 install 'bitpay'`
 
