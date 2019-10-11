@@ -46,9 +46,10 @@ class Client:
       return response.json()['data']
     self.response_error(response)
 
-  def get_invoice(self, invoice_id): 
+  def get_invoice(self, invoice_id):
     uri = self.uri + "/invoices/" + invoice_id
-    headers = {'accept': 'application/json'}
+    headers = {"content-type": "application/json", 'accept': 'application/json'}
+
     try:
       response = requests.get(uri, headers=headers, verify=self.verify)
     except Exception as pro:
