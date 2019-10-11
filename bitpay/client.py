@@ -46,9 +46,15 @@ class Client:
       return response.json()['data']
     self.response_error(response)
 
-  def get_invoice(self, invoice_id):
-    uri = self.uri + "/invoices/" + invoice_id
-    headers = {"content-type": "application/json", 'accept': 'application/json'}
+  def get_invoice(self, invoice_id, token=None):
+    if token:
+      uri = self.uri + "/invoices/" + invoice_id + "?token=" + token
+      xidentity = key_utils.get_compressed_public_key_from_pem(self.pem)
+      xsignature = key_utils.sign(uri, self.pem)
+      headers = {"content-type": "application/json", 'accept': 'application/json', 'X-Identity': xidentity, 'X-Signature': xsignature, 'X-accept-version': '2.0.0'}
+    else:
+      uri = self.uri + "/invoices/" + invoice_id
+      headers = {"content-type": "application/json", 'accept': 'application/json'}
 
     try:
       response = requests.get(uri, headers=headers, verify=self.verify)
