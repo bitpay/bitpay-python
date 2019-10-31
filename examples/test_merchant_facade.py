@@ -75,8 +75,8 @@ def post_to_bitpay_api(client, uri, resource, params):
     xidentity = key_utils.get_compressed_public_key_from_pem(client.pem)
     xsignature = key_utils.sign(uri + payload, client.pem)
     headers = {"content-type": "application/json",
-               "accept": "application/json", "X-Identity": xidentity,
-               "X-Signature": xsignature, "X-accept-version": "2.0.0"}
+               "X-Identity": xidentity,"X-Signature": xsignature,
+               "X-accept-version": "2.0.0"}
     try:
         response = requests.post(uri, data=payload, headers=headers,
                                  verify=client.verify)
