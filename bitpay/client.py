@@ -37,7 +37,7 @@ class Client:
     uri = self.uri + "/invoices"
     xidentity = key_utils.get_compressed_public_key_from_pem(self.pem)
     xsignature = key_utils.sign(uri + payload, self.pem)
-    headers = {"content-type": "application/json", 'accept': 'application/json', 'X-Identity': xidentity, 'X-Signature': xsignature, 'X-accept-version': '2.0.0'}
+    headers = {"content-type": "application/json", 'X-Identity': xidentity, 'X-Signature': xsignature, 'X-accept-version': '2.0.0'}
     try:
       response = requests.post(uri, data=payload, headers=headers, verify=self.verify)
     except Exception as pro:
@@ -46,9 +46,16 @@ class Client:
       return response.json()['data']
     self.response_error(response)
 
-  def get_invoice(self, invoice_id): 
-    uri = self.uri + "/invoices/" + invoice_id
-    headers = {'accept': 'application/json'}
+  def get_invoice(self, invoice_id, token=None):
+    if token:
+        uri = self.uri + "/invoices/" + invoice_id + "?token=" + token
+        xidentity = key_utils.get_compressed_public_key_from_pem(self.pem)
+        xsignature = key_utils.sign(uri, self.pem)
+        headers = {"content-type": "application/json", 'X-Identity': xidentity, 'X-Signature': xsignature, 'X-accept-version': '2.0.0'}
+    else:
+        uri = self.uri + "/invoices/" + invoice_id
+        headers = {"content-type": "application/json"}
+
     try:
       response = requests.get(uri, headers=headers, verify=self.verify)
     except Exception as pro:
@@ -64,7 +71,7 @@ class Client:
     xidentity = key_utils.get_compressed_public_key_from_pem(self.pem)
     url = self.uri + "/tokens"
     xsignature = key_utils.sign(self.uri + "/tokens", self.pem)
-    headers = {"content-type": "application/json", 'accept': 'application/json', 'X-Identity': xidentity, 'X-Signature': xsignature, 'X-accept-version': '2.0.0'}
+    headers = {"content-type": "application/json", 'X-Identity': xidentity, 'X-Signature': xsignature, 'X-accept-version': '2.0.0'}
     response = requests.get(self.uri + "/tokens", headers=headers, verify=self.verify)
     if response.ok:
       allTokens = response.json()['data']
@@ -101,7 +108,7 @@ class Client:
     generic bitpay usigned wrapper
     passing a payload will do a POST, otherwise a GET
     """
-    headers = {"content-type": "application/json", "accept": "application/json", "X-accept-version": "2.0.0"}
+    headers = {"content-type": "application/json", "X-accept-version": "2.0.0"}
     try:
       if payload:
         response = requests.post(self.uri + path, verify=self.verify, data=json.dumps(payload), headers=headers)
