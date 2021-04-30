@@ -12,5 +12,5 @@ pymongo==3.8.0
 requests==2.21.0
 selenium==3.141.0
 splinter==0.10.0
-urllib3==1.25.2
+urllib3==1.25.8
 virtualenv==16.6.0
