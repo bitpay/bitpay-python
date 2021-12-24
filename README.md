@@ -1,1 +1,1 @@
-# This repository is no longer maintained and it will be archived by the end of 2021, please refer to the latest version [Here](https://github.com/bitpay/python-bitpay-client)
+# This repository is no longer maintained and it will be archived by the end of 2021, we are working on a complete new SDK that will be available soon [Here](https://github.com/bitpay/python-bitpay-client)
